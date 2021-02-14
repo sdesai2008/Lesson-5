@@ -1,0 +1,61 @@
+Use all_alpha_08.csv and all_alpha_18.csv
+
+# load datasets
+import pandas as pd
+df_08 = pd.read_csv('all_alpha_08.csv')
+df_18 = pd.read_csv('all_alpha_18.csv')
+# view 2008 dataset
+df_08.head(1)
+Model	Displ	Cyl	Trans	Drive	Fuel	Sales Area	Stnd	Underhood ID	Veh Class	Air Pollution Score	FE Calc Appr	City MPG	Hwy MPG	Cmb MPG	Unadj Cmb MPG	Greenhouse Gas Score	SmartWay
+0	ACURA MDX	3.7	(6 cyl)	Auto-S5	4WD	Gasoline	CA	U2	8HNXT03.7PKR	SUV	7	Drv	15	20	17	22.0527	4	no
+# view 2018 dataset
+df_18.head(1)
+Model	Displ	Cyl	Trans	Drive	Fuel	Cert Region	Stnd	Stnd Description	Underhood ID	Veh Class	Air Pollution Score	City MPG	Hwy MPG	Cmb MPG	Greenhouse Gas Score	SmartWay	Comb CO2
+0	ACURA RDX	3.5	6.0	SemiAuto-6	2WD	Gasoline	FA	T3B125	Federal Tier 3 Bin 125	JHNXT03.5GV3	small SUV	3	20	28	23	5	No	386
+Drop Extraneous Columns
+# drop columns from 2008 dataset
+df_08.drop(['Stnd', 'Underhood ID', 'FE Calc Appr', 'Unadj Cmb MPG'], axis=1, inplace=True)
+​
+# confirm changes
+df_08.head(1)
+Model	Displ	Cyl	Trans	Drive	Fuel	Sales Area	Veh Class	Air Pollution Score	City MPG	Hwy MPG	Cmb MPG	Greenhouse Gas Score	SmartWay
+0	ACURA MDX	3.7	(6 cyl)	Auto-S5	4WD	Gasoline	CA	SUV	7	15	20	17	4	no
+# drop columns from 2018 dataset
+df_18.drop(['Stnd', 'Stnd Description', 'Underhood ID', 'Comb CO2'], axis=1, inplace=True)
+# confirm changes
+---------------------------------------------------------------------------
+KeyError                                  Traceback (most recent call last)
+<ipython-input-8-60a75f4e7ce4> in <module>()
+      1 # drop columns from 2018 dataset
+----> 2 df_18.drop(['Stnd', 'Stnd Description', 'Underhood ID', 'Comb CO2'], axis=1, inplace=True)
+      3 # confirm changes
+
+/opt/conda/lib/python3.6/site-packages/pandas/core/frame.py in drop(self, labels, axis, index, columns, level, inplace, errors)
+   3695                                            index=index, columns=columns,
+   3696                                            level=level, inplace=inplace,
+-> 3697                                            errors=errors)
+   3698 
+   3699     @rewrite_axis_style_signature('mapper', [('copy', True),
+
+/opt/conda/lib/python3.6/site-packages/pandas/core/generic.py in drop(self, labels, axis, index, columns, level, inplace, errors)
+   3109         for axis, labels in axes.items():
+   3110             if labels is not None:
+-> 3111                 obj = obj._drop_axis(labels, axis, level=level, errors=errors)
+   3112 
+   3113         if inplace:
+
+/opt/conda/lib/python3.6/site-packages/pandas/core/generic.py in _drop_axis(self, labels, axis, level, errors)
+   3141                 new_axis = axis.drop(labels, level=level, errors=errors)
+   3142             else:
+-> 3143                 new_axis = axis.drop(labels, errors=errors)
+   3144             result = self.reindex(**{axis_name: new_axis})
+   3145 
+
+/opt/conda/lib/python3.6/site-packages/pandas/core/indexes/base.py in drop(self, labels, errors)
+   4402             if errors != 'ignore':
+   4403                 raise KeyError(
+-> 4404                     '{} not found in axis'.format(labels[mask]))
+   4405             indexer = indexer[~mask]
+   4406         return self.delete(indexer)
+
+KeyError: "['Stnd' 'Stnd Description' 'Underhood ID' 'Comb CO2'] not found in axis"
