@@ -1,0 +1,28 @@
+
+Code
+Filter, Drop Nulls, Dedupe
+Use data_08_v1.csv and data_18_v1.csv. You should've created these data files in the previous section: Cleaning Column Labels.
+
+# load datasets
+import pandas as pd
+df_08 = pd.read_csv('data_08_v1.csv')
+df_18 = pd.read_csv('data_18_v1.csv') 
+# view dimensions of dataset
+df_08.shape
+(2404, 14)
+# view dimensions of dataset
+df_18.shape
+(1611, 14)
+Filter by Certification Region
+# filter datasets for rows following California standards
+# df_08 = df_08.query(‘cert_region’ = ‘CA’)
+# df_18 = df_18.query(‘cert_region’ = ‘CA’)
+df_08 = df_08.query('cert_region == "CA"', inplace = True)
+---------------------------------------------------------------------------
+AttributeError                            Traceback (most recent call last)
+<ipython-input-20-e889a1e4a25e> in <module>()
+      2 # df_08 = df_08.query(‘cert_region’ = ‘CA’)
+      3 # df_18 = df_18.query(‘cert_region’ = ‘CA’)
+----> 4 df_08 = df_08.query('cert_region == "CA"', inplace = True)
+
+AttributeError: 'NoneType' object has no attribute 'query'
